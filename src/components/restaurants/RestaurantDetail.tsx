@@ -9,7 +9,6 @@ export default function RestaurantDetail() {
   const [loading, setLoading] = useState(true)
   const [logoPosition, setLogoPosition] = useState({ x: 50, y: 50 }) // Percentage position
   const [isDragging, setIsDragging] = useState(false)
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const logoRef = useRef<HTMLImageElement>(null)
@@ -63,24 +62,11 @@ export default function RestaurantDetail() {
   const handleLogoMouseDown = (e: React.MouseEvent) => {
     e.preventDefault()
     setIsDragging(true)
-    if (containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect()
-      setDragStart({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
-      })
-    }
   }
 
-  const handleTouchStart = (e: React.TouchEvent) => {
+  const handleTouchStart = () => {
     if (!containerRef.current) return
-    const touch = e.touches[0]
-    const rect = containerRef.current.getBoundingClientRect()
     setIsDragging(true)
-    setDragStart({
-      x: touch.clientX - rect.left,
-      y: touch.clientY - rect.top
-    })
   }
 
   const handleTouchMove = (e: React.TouchEvent) => {
